@@ -1,5 +1,5 @@
 {
-  "name": "jasonjs",
+  "name": "@cm64/jasonjs",
   "version": "1.0.0",
   "description": "JasonJS, build anything with Json",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -40,6 +40,8 @@
     "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.21",
     "jest": "^29.7.0",
-    "ts-jest": "^29.1.2"
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.4.2"
   }
 }

@@ -1,6 +1,6 @@
 # JasonJS
 
-Welcome to **JasonJS** — the artistic, JSON-powered UI builder for React developers. JasonJS empowers you to craft your interfaces with the precision of a seasoned artist and the ingenuity of a hacker. Born from the creative minds at CM64.studio, this tool is for those who see code not just as a series of instructions, but as a canvas for innovation.
+Welcome to **JasonJS** — the magical, JSON-powered UI builder for React developers. JasonJS empowers you to craft your interfaces with the precision of a seasoned artist and the ingenuity of a hacker. Born from the creative minds at CM64.studio, this tool is for those who see code not just as a series of instructions, but as a canvas for innovation.
 
 ## Introduction
 
@@ -18,20 +18,20 @@ In a world where UIs are as dynamic as the data they represent, JasonJS stands a
 Install JasonJS with npm:
 
 ```bash
-npm install jasonjs
+npm install @cm64/jasonjs
 ```
 
 ## Quick Start
 
 ```
-import Jason from 'jasonjs';
+import JasonCraftThisJSON from 'jasonjs';
 
-const myUI = {
+const json = {
   // Your JSON configuration
 };
 
 function App() {
-  return <Jason config={myUI} />;
+  return <JasonCraftThisJSON json={myUI} />;
 }
 ```
 
@@ -39,7 +39,7 @@ function App() {
 
 JasonJS is more than a tool; it's a community. Your ideas and contributions are what make it thrive. To contribute:
 
-1. Clone the repo: git clone https://github.com/your-username/jasonjs.git
+1. Clone the repo: git clone https://github.com/cm64-studio/jasonjs.git
 2. Create your feature branch: git checkout -b my-new-feature
 3. Commit your changes: git commit -am 'Add some feature'
 4. Push to the branch: git push origin my-new-feature
@@ -51,7 +51,7 @@ Need help? Open an issue in our issue tracker and we'll get to you as soon as we
 
 ## Licence
 
-JasonJS is licensed under the MIT License. See [LICENSE]
+JasonJS is licensed under the MIT License. See the LICENSE file for details.
 
 ## Acknowledgments
 A heartfelt thanks to the contributors and supporters who breathe life into this project.
