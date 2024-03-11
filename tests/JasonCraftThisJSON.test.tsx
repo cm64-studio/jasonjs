@@ -1,13 +1,12 @@
 // tests/JasonCraftThisJSON.test.tsx
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { JasonCraftThisJSON } from '../src';
+import { JasonCraftThisJSON, JasonJSON } from '../src';
 import '@testing-library/jest-dom';
-import { JPageConfig } from '../src/Jason';
 
 describe('JasonCraftThisJSON', () => {
   it('renders components based on JSON config', () => {
-    const jsonConfig: JPageConfig = {
+    const jsonConfig: JasonJSON = {
       components: [
         {
           component: 'div',

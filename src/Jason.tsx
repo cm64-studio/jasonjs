@@ -10,8 +10,9 @@ export interface JComponentBlueprint {
   innerHTML?: string; // Add innerHTML to the interface
 }
 
-export interface JPageConfig {
+export interface JasonJSON {
   components: JComponentBlueprint[];
+  [key: string]: any; // Allows for any number of additional properties
 }
 
 // Helper function for dynamically loading components
@@ -49,7 +50,7 @@ const JasonBringsComponent = ({ component, type, attributes, components, innerHT
 };
 
 // Main function to craft pages from JSON
-const JasonCraftThisJSON = ({ json }: { json: JPageConfig }) => {
+const JasonCraftThisJSON = ({ json }: { json: JasonJSON }) => {
   return (
     <>
       {json.components.map((component, index) => (
