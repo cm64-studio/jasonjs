@@ -1,17 +1,17 @@
 import React, { Suspense, ReactNode } from 'react';
 
 // Define interfaces for clarity and type safety
-export interface JComponentBlueprint {
+export interface JasonComponent {
   component: string;
   type: 'JComponent' | 'JTag';
   basePath?: string;
   attributes?: any;
-  components?: JComponentBlueprint[]; // Allows for recursive component structures
+  components?: JasonComponent[]; // Allows for recursive component structures
   innerHTML?: string; // Add innerHTML to the interface
 }
 
 export interface JasonJSON {
-  components: JComponentBlueprint[];
+  components: JasonComponent[];
   [key: string]: any; // Allows for any number of additional properties
 }
 
@@ -24,7 +24,7 @@ const loadComponent = (componentName: string, basePath: string) => {
     }));
 };
 
-const JasonBringsComponent = ({ component, type, attributes, components, innerHTML }: JComponentBlueprint): ReactNode => {
+const JasonBringsComponent = ({ component, type, attributes, components, innerHTML }: JasonComponent): ReactNode => {
   // Handling JComponent type with dynamic loading
   if (type === "JComponent") {
     const Component = loadComponent(component,"../../jason/");

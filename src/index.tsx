@@ -4,4 +4,4 @@
 export { default as JasonCraftThisJSON } from './Jason';
 
 // Re-export JasonJSON as a named export from ./Jason
-export type { JasonJSON } from './Jason';
+export type { JasonJSON, JasonComponent } from './Jason';
