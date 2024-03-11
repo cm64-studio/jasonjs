@@ -2,7 +2,8 @@
   "name": "@cm64/jasonjs",
   "version": "1.0.2",
   "description": "JasonJS, build anything with Json",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "directories": {
     "test": "tests"
   },
