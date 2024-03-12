@@ -1,6 +1,6 @@
 {
   "name": "@cm64/jasonjs",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "JasonJS, build anything with Json",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
