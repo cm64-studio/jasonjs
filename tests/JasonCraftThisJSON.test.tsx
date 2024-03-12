@@ -1,7 +1,7 @@
 // tests/JasonCraftThisJSON.test.tsx
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { JasonCraftThisJSON, JasonJSON } from '../src';
+import JasonCraftThisJSON, { JasonJSON } from '../src/Jason';
 import '@testing-library/jest-dom';
 
 describe('JasonCraftThisJSON', () => {
