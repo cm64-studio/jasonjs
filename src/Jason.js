@@ -8,7 +8,7 @@ const sanitizeInnerHTML = (htmlContent) => {
 };
 
 // The JasonBringsComponent dynamically loads and renders components based on the passed props.
-const JasonBringsComponent = ({ component, type, basePath = '../../jason/', attributes, components, innerHTML }) => {
+const JasonBringsComponent = ({ component, type, basePath, attributes, components, innerHTML }) => {
   if (type === "JComponent") {
     const DynamicComponent = React.lazy(async () => {
       const module = await import(`${basePath}${component}`);
@@ -46,11 +46,11 @@ JasonBringsComponent.propTypes = {
   innerHTML: PropTypes.string,
 };
 
-const JasonCraftThisJSON = ({ json }) => {
+const JasonCraftThisJSON = ({ json, basePath  = process.env.NEXT_PUBLIC_JASON_BASE_PATH || '/jason/'  }) => {
   return (
     <>
       {json.components.map((component, index) => (
-        <JasonBringsComponent key={index} {...component} />
+        <JasonBringsComponent key={index} basePath={basePath} {...component} />
       ))}
     </>
   );
