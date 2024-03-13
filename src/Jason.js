@@ -11,17 +11,29 @@ const JasonBringsComponent = ({ component: componentName, attributes, components
     return null; // Or render a fallback component
   }
 
-  const sanitizedInnerHTML = innerHTML ? DOMPurify.sanitize(innerHTML) : null;
+  let content = null;
 
-  const nestedComponents = components?.map((c, index) => (
-    <JasonBringsComponent key={index} {...c} componentRegistry={componentRegistry} />
-  ));
-
-  // if innerHTML is provided, wrap nestedComponents in a div that also includes the sanitized innerHTML
-  // Otherwise, just render nestedComponents directly
-  const content = sanitizedInnerHTML
-    ? (<div dangerouslySetInnerHTML={{ __html: sanitizedInnerHTML }} />)
-    : nestedComponents;
+  if (innerHTML) {
+    var sanitizedInnerHTML = innerHTML;
+    if (typeof window !== 'undefined' && innerHTML) {
+      sanitizedInnerHTML = DOMPurify.sanitize(innerHTML);
+    }
+    
+    content = (
+      <>
+        {sanitizedInnerHTML }
+        {/* Render nested components, if any */}
+        {components?.map((c, index) => (
+          <JasonBringsComponent key={index} {...c} componentRegistry={componentRegistry} />
+        ))}
+      </>
+    );
+  } else {
+    // If no innerHTML, proceed with rendering nested components directly
+    content = components?.map((c, index) => (
+      <JasonBringsComponent key={index} {...c} componentRegistry={componentRegistry} />
+    ));
+  }
 
   return (
     <Component {...attributes}>
