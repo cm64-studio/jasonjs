@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'; // Adding PropTypes for basic type checking
 import DOMPurify from 'dompurify';
 
 // The JasonBringsComponent dynamically loads and renders components based on the passed props.
-const JasonBringsComponent = ({ component: componentName, attributes, components, componentRegistry, innerHTML }) => {
+const JasonBringsComponent = ({ component: componentName, attributes, components, componentRegistry, dataContext, innerHTML }) => {
   const Component = componentRegistry[componentName] || componentName;
 
   if (!Component) {
@@ -24,14 +24,14 @@ const JasonBringsComponent = ({ component: componentName, attributes, components
         {sanitizedInnerHTML }
         {/* Render nested components, if any */}
         {components?.map((c, index) => (
-          <JasonBringsComponent key={index} {...c} componentRegistry={componentRegistry} />
+          <JasonBringsComponent key={index} {...c} dataContext={dataContext} componentRegistry={componentRegistry} />
         ))}
       </>
     );
   } else {
     // If no innerHTML, proceed with rendering nested components directly
     content = components?.map((c, index) => (
-      <JasonBringsComponent key={index} {...c} componentRegistry={componentRegistry} />
+      <JasonBringsComponent key={index} {...c} dataContext={dataContext} componentRegistry={componentRegistry} />
     ));
   }
 
@@ -45,17 +45,16 @@ const JasonBringsComponent = ({ component: componentName, attributes, components
 // Adding PropTypes for basic validation
 JasonBringsComponent.propTypes = {
   component: PropTypes.string.isRequired,
-  type: PropTypes.string,
   attributes: PropTypes.object,
   components: PropTypes.array,
   innerHTML: PropTypes.string,
 };
 
-const JasonCraftThisJSON = ({ json, componentRegistry = {}}) => {
+const JasonCraftThisJSON = ({ json, componentRegistry = {}, dataContext = {}}) => {
   return (
     <>
       {json.components.map((component, index)  => {
-        return <JasonBringsComponent key={index} componentRegistry={componentRegistry} {...component} />
+        return <JasonBringsComponent key={index} dataContext={dataContext} componentRegistry={componentRegistry} {...component} />
       })}
     </>
   );

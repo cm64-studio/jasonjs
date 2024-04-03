@@ -24,7 +24,15 @@ describe('JasonCraftThisJSON', () => {
       ]
     };
 
-    render(<JasonCraftThisJSON json={jsonConfig} />);
+    const testDataContext = {
+      params: 'Test Title',
+      data: [{
+        title: 'Test Content'
+        
+      }]
+    };
+
+    render(<JasonCraftThisJSON json={jsonConfig} dataContext={testDataContext}/>);
 
     expect(screen.getByText('Test Content')).toBeInTheDocument();
 
