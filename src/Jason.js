@@ -24,19 +24,19 @@ const JasonBringsComponent = ({ component: componentName, attributes, components
         {sanitizedInnerHTML }
         {/* Render nested components, if any */}
         {components?.map((c, index) => (
-          <JasonBringsComponent key={index} {...c} dataContext={dataContext} componentRegistry={componentRegistry} />
+          <JasonBringsComponent key={index} {...c} componentRegistry={componentRegistry} />
         ))}
       </>
     );
   } else {
     // If no innerHTML, proceed with rendering nested components directly
     content = components?.map((c, index) => (
-      <JasonBringsComponent key={index} {...c} dataContext={dataContext} componentRegistry={componentRegistry} />
+      <JasonBringsComponent key={index} {...c} componentRegistry={componentRegistry} />
     ));
   }
 
   return (
-    <Component {...attributes}>
+    <Component dataContext={dataContext} {...attributes}>
       {content}
     </Component>
   );
