@@ -10,12 +10,10 @@ describe('JasonCraftThisJSON', () => {
       components: [
         {
           component: 'div',
-          type: 'JTag',
           attributes: { className: 'test-class' },
           components: [
             {
               component: 'span',
-              type: 'JTag',
               attributes: {},
               innerHTML: 'Test Content'
             }
@@ -32,7 +30,7 @@ describe('JasonCraftThisJSON', () => {
       }]
     };
 
-    render(<JasonCraftThisJSON json={jsonConfig} dataContext={testDataContext}/>);
+    render(<JasonCraftThisJSON json={jsonConfig} jcontext={testDataContext} jcomponents={{}}/>);
 
     expect(screen.getByText('Test Content')).toBeInTheDocument();
 
