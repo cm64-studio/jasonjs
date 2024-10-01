@@ -1,14 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types'; // Adding PropTypes for basic type checking
+import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 
-// The JasonBringsComponent dynamically loads and renders components based on the passed props.
-const JasonBringsComponent = ({ component: componentName, attributes, components, jcomponents, jcontext, innerHTML }) => {
+const JasonBringsComponent = ({ 
+  component: componentName, 
+  attributes, 
+  components, 
+  jcomponents, 
+  jcontext, 
+  innerHTML,
+  renderComponent // New prop for custom rendering
+}) => {
   const Component = jcomponents[componentName] || componentName;
 
   if (!Component) {
     console.error(`Component ${componentName} not found in registry.`);
-    return null; // Or render a fallback component
+    return null;
   }
 
   let content = null;
@@ -21,18 +28,38 @@ const JasonBringsComponent = ({ component: componentName, attributes, components
     
     content = (
       <>
-        {sanitizedInnerHTML }
-        {/* Render nested components, if any */}
+        {sanitizedInnerHTML}
         {components?.map((c, index) => (
-          <JasonBringsComponent key={index} {...c} jcomponents={jcomponents} />
+          <JasonBringsComponent 
+            key={index} 
+            {...c} 
+            jcomponents={jcomponents} 
+            jcontext={jcontext}
+            renderComponent={renderComponent}
+          />
         ))}
       </>
     );
   } else {
-    // If no innerHTML, proceed with rendering nested components directly
     content = components?.map((c, index) => (
-      <JasonBringsComponent key={index} {...c} jcomponents={jcomponents} />
+      <JasonBringsComponent 
+        key={index} 
+        {...c} 
+        jcomponents={jcomponents} 
+        jcontext={jcontext}
+        renderComponent={renderComponent}
+      />
     ));
+  }
+
+  // Use the custom renderComponent function if provided
+  if (renderComponent && typeof Component === 'function') {
+    return renderComponent({
+      Component,
+      props: { ...attributes, jcontext },
+      content,
+      componentName
+    });
   }
 
   return (
@@ -42,30 +69,42 @@ const JasonBringsComponent = ({ component: componentName, attributes, components
   );
 };
 
-// Adding PropTypes for basic validation
 JasonBringsComponent.propTypes = {
   component: PropTypes.string.isRequired,
   attributes: PropTypes.object,
   components: PropTypes.array,
   innerHTML: PropTypes.string,
+  renderComponent: PropTypes.func, // New PropType for renderComponent
 };
 
-const JasonCraftThisJSON = ({ json, jcomponents = {}, jcontext = {}}) => {
+const JasonCraftThisJSON = ({ 
+  json, 
+  jcomponents = {}, 
+  jcontext = {},
+  renderComponent // New prop for custom rendering
+}) => {
   return (
     <>
-      {json.components.map((component, index)  => {
-        return <JasonBringsComponent key={index} jcontext={jcontext} jcomponents={jcomponents} {...component} />
-      })}
+      {json.components.map((component, index) => (
+        <JasonBringsComponent 
+          key={index} 
+          jcontext={jcontext} 
+          jcomponents={jcomponents} 
+          renderComponent={renderComponent}
+          {...component} 
+        />
+      ))}
     </>
   );
 };
 
-// Adding PropTypes for basic validation
 JasonCraftThisJSON.propTypes = {
   json: PropTypes.shape({
     components: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
-  componentRegistry: PropTypes.object, // Updated to expect an object
+  jcomponents: PropTypes.object,
+  jcontext: PropTypes.object,
+  renderComponent: PropTypes.func, // New PropType for renderComponent
 };
 
 export default JasonCraftThisJSON;
