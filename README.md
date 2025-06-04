@@ -1,33 +1,41 @@
 # JasonJS
 
-Welcome to **JasonJS** — the magical, JSON-powered UI builder for React developers. JasonJS empowers you to craft your interfaces with the precision of a seasoned artist and the ingenuity of a hacker. Born from the creative minds at CM64.studio, this tool is for those who see code not just as a series of instructions, but as a canvas for innovation.
+A simple, powerful way to build React UIs using JSON configuration.
 
-## Introduction
+## Why JasonJS?
 
-In a world where UIs are as dynamic as the data they represent, JasonJS stands as a testament to flexibility and collaboration. With a simple JSON configuration, you can construct complex React interfaces, blending styles, components, and logic into one harmonious symphony. 
+Building dynamic UIs often requires complex state management and conditional rendering logic. JasonJS simplifies this by letting you describe your UI as JSON data - making it easy to store, transmit, and generate user interfaces programmatically.
 
-## Features
-
-- **Declarative JSON Syntax**: Define your UI structure with ease and clarity.
-- **Dynamic Component Loading**: Seamlessly load components as and when needed.
-- **Recursive Composition**: Nest components within components to create intricate layouts.
-- **Open Source Collaboration**: Shaped by the vibrant contributions of developers like you.
+Whether you're building a CMS, a form builder, or any system where UI needs to be configured rather than coded, JasonJS provides a clean, declarative approach.
 
 ## Installation
-
-Install JasonJS with npm:
 
 ```bash
 npm install @cm64/jasonjs
 ```
 
-## Quick Start
+## Basic Usage
 
-```
-import JasonCraftThisJSON from 'jasonjs';
+```jsx
+import JasonCraftThisJSON from '@cm64/jasonjs';
 
-const json = {
-  // Your JSON configuration
+const myUI = {
+  components: [
+    {
+      component: "div",
+      attributes: { className: "container" },
+      components: [
+        {
+          component: "h1",
+          innerHTML: "Hello, JasonJS!"
+        },
+        {
+          component: "p",
+          innerHTML: "Build your UI with simple JSON."
+        }
+      ]
+    }
+  ]
 };
 
 function App() {
@@ -35,26 +43,190 @@ function App() {
 }
 ```
 
-## Contribute
+## Using Custom Components
 
-JasonJS is more than a tool; it's a community. Your ideas and contributions are what make it thrive. To contribute:
+Register your React components and use them in your JSON:
 
-1. Clone the repo: git clone https://github.com/cm64-studio/jasonjs.git
-2. Create your feature branch: git checkout -b my-new-feature
-3. Commit your changes: git commit -am 'Add some feature'
-4. Push to the branch: git push origin my-new-feature
-5. Submit a pull request
+```jsx
+import JasonCraftThisJSON from '@cm64/jasonjs';
+import { Button, Card } from './components';
 
-## Support
+const jcomponents = {
+  Button,
+  Card
+};
 
-Need help? Open an issue in our issue tracker and we'll get to you as soon as we can.
+const myUI = {
+  components: [
+    {
+      component: "Card",
+      attributes: { title: "Welcome" },
+      components: [
+        {
+          component: "p",
+          innerHTML: "This is a custom card component"
+        },
+        {
+          component: "Button",
+          attributes: { 
+            onClick: () => alert('Clicked!'),
+            variant: "primary"
+          },
+          innerHTML: "Click Me"
+        }
+      ]
+    }
+  ]
+};
 
-## Licence
+function App() {
+  return <JasonCraftThisJSON json={myUI} jcomponents={jcomponents} />;
+}
+```
 
-JasonJS is licensed under the MIT License. See the LICENSE file for details.
+## Passing Context
+
+Share data across your component tree using `jcontext`:
+
+```jsx
+const jcontext = {
+  user: { name: "John Doe" },
+  theme: "dark"
+};
+
+function App() {
+  return (
+    <JasonCraftThisJSON 
+      json={myUI} 
+      jcomponents={jcomponents}
+      jcontext={jcontext}
+    />
+  );
+}
+```
+
+## Custom Rendering
+
+For advanced use cases, you can customize how components are rendered:
+
+```jsx
+const renderComponent = ({ Component, props, content, componentName }) => {
+  // Add custom logic here
+  console.log(`Rendering ${componentName}`);
+  
+  return <Component {...props}>{content}</Component>;
+};
+
+function App() {
+  return (
+    <JasonCraftThisJSON 
+      json={myUI} 
+      renderComponent={renderComponent}
+    />
+  );
+}
+```
+
+## JSON Structure
+
+```typescript
+{
+  components: [
+    {
+      component: string,        // Component name or HTML element
+      attributes?: object,      // Props to pass to the component
+      innerHTML?: string,       // Text content (sanitized)
+      components?: array        // Nested components
+    }
+  ]
+}
+```
+
+## Examples
+
+### Form Example
+
+```json
+{
+  "components": [
+    {
+      "component": "form",
+      "attributes": { "className": "contact-form" },
+      "components": [
+        {
+          "component": "input",
+          "attributes": { 
+            "type": "text",
+            "placeholder": "Your Name",
+            "name": "name"
+          }
+        },
+        {
+          "component": "input",
+          "attributes": { 
+            "type": "email",
+            "placeholder": "Your Email",
+            "name": "email"
+          }
+        },
+        {
+          "component": "button",
+          "attributes": { "type": "submit" },
+          "innerHTML": "Send"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Navigation Example
+
+```json
+{
+  "components": [
+    {
+      "component": "nav",
+      "components": [
+        {
+          "component": "a",
+          "attributes": { "href": "/" },
+          "innerHTML": "Home"
+        },
+        {
+          "component": "a",
+          "attributes": { "href": "/about" },
+          "innerHTML": "About"
+        },
+        {
+          "component": "a",
+          "attributes": { "href": "/contact" },
+          "innerHTML": "Contact"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Try It Online
+
+[Try JasonJS on CodeSandbox →](https://codesandbox.io/p/sandbox/quizzical-morse-yfk5zl)
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+MIT © [CM64.studio](https://github.com/cm64-studio)
 
 ## Acknowledgments
-A heartfelt thanks to the contributors and supporters who breathe life into this project.
-Inspired by the retro charm of the Commodore64 and the forward-thinking of CM64.studio.
 
-Craft your UI, tell your story, build with JasonJS.
+Created with ❤️ by the team at CM64.studio

@@ -1,0 +1,32 @@
+# Source files
+src/
+tests/
+examples/
+
+# Development files
+.babelrc
+jest.config.js
+BUILDME.md
+CLAUDE.md
+
+# Git and IDE
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
+
+# Coverage
+coverage/
+
+# Test files
+*.test.js
+*.test.jsx
+*.spec.js
+*.spec.jsx

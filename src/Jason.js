@@ -6,13 +6,13 @@ const JasonBringsComponent = ({
   component: componentName, 
   attributes, 
   components, 
-  jcomponents, 
-  jcontext, 
+  jcomponents = {}, 
+  jcontext = {}, 
   innerHTML,
   renderComponent // New prop for custom rendering
 }) => {
   const Component = jcomponents[componentName] || componentName;
-
+  const fComponentExists = jcomponents[componentName] ? true : false;
   if (!Component) {
     console.error(`Component ${componentName} not found in registry.`);
     return null;
@@ -25,21 +25,35 @@ const JasonBringsComponent = ({
     if (typeof window !== 'undefined' && innerHTML) {
       sanitizedInnerHTML = DOMPurify.sanitize(innerHTML);
     }
-    
-    content = (
-      <>
-        {sanitizedInnerHTML}
-        {components?.map((c, index) => (
-          <JasonBringsComponent 
-            key={index} 
-            {...c} 
-            jcomponents={jcomponents} 
-            jcontext={jcontext}
-            renderComponent={renderComponent}
-          />
-        ))}
-      </>
-    );
+
+    if (fComponentExists) {
+      content = (
+        <>
+          {sanitizedInnerHTML}
+          {components?.map((c, index) => (
+            <JasonBringsComponent 
+              key={index} 
+              {...c} 
+              jcomponents={jcomponents} 
+              jcontext={jcontext}
+              renderComponent={renderComponent}
+            />
+          ))}
+        </>
+      );
+    } else {
+      content = (
+        <>
+          {sanitizedInnerHTML}
+          {components?.map((c, index) => (
+            <JasonBringsComponent 
+              key={index} 
+              {...c} 
+            />
+          ))}
+        </>
+      );
+    }
   } else {
     content = components?.map((c, index) => (
       <JasonBringsComponent 

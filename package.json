@@ -1,6 +1,6 @@
 {
   "name": "@cm64/jasonjs",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "JasonJS, build anything with Json",
   "repository": {
     "type": "git",
@@ -26,7 +26,10 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "babel src --out-dir dist --extensions '.js,.jsx' --copy-files"
+    "test:watch": "jest --watch",
+    "build": "babel src --out-dir dist --extensions '.js,.jsx' --copy-files",
+    "dev": "babel src --out-dir dist --extensions '.js,.jsx' --copy-files --watch",
+    "prepublishOnly": "npm test && npm run build"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.9",
